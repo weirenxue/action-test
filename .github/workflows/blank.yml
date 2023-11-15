@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pwd before checkout
+        run: pwd
+      - uses: actions/checkout@v4
+      - name: pwd after checkout
+        run: pwd
+      - name: echo to file
+        run: |
+          mkdir hello
+          echo "hello world" > hello/hello_world.txt
+          echo "hello!" > hello/hello.txt
+      - name: Cache file
+        uses: actions/cache@v3
+        with:
+          path: |
+            hello/hello_world.txt
+            hello/hello.txt
+          key: ${{ github.run_id }}-hello_world
+          
+  cat:
+    runs-on: ubuntu-latest
+    needs: echo
+    steps:
+      - name: Cache file
+        uses: actions/cache@v3
+        with:
+          key: ${{ github.run_id }}-hello_world
+      - name: cat
+        run: |
+          ls 
+          ls hello
+          cat hello/hello_world.txt
+          cat hello/hello.txt
+      
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/setup-go@v4
+  #       with:
+  #         go-version: '1.21.3'
+  #     - name: Go version
+  #       run: |
+  #         go version
+  #         pwd
+  #         ls ~/go
+  #         ls ~/go/bin
+
+  #     - name: Cache goimports
+  #       id: cache-goimports
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/go/bin/goimports
+  #         key: ${{ runner.os }}-goimports-v0.15.0
+
+  #     - name: Install goimports
+  #       if: steps.cache-goimports.outputs.cache-hit != 'true'
+  #       run: go install golang.org/x/tools/cmd/goimports@v0.15.0
+        
+  #     - name: Cache staticcheck
+  #       id: cache-staticcheck
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/go/bin/staticcheck
+  #         key: ${{ runner.os }}-staticcheck-2023.1.6
+
+  #     - name: Install staticcheck
+  #       if: steps.cache-staticcheck.outputs.cache-hit != 'true'
+  #       run: go install honnef.co/go/tools/cmd/staticcheck@2023.1.6
+  # gcloud:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - id: 'auth'
+  #     uses: 'google-github-actions/auth@v1'
+  #     with:
+  #       credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+  #   - name: 'Set up Cloud SDK'
+  #     uses: 'google-github-actions/setup-gcloud@v1'
+
+  #   - name: gcloud auth
+  #     run: |
+  #       echo ${SERVICE_ACCOUNT_JSON}
+  #       gcloud auth activate-service-account --key-file=${SERVICE_ACCOUNT_JSON}
+  #     env:
+  #       SERVICE_ACCOUNT_JSON: ${{ steps.auth.outputs.credentials_file_path }}
+    
+  #   - name: Use gsutil
+  #     run: gsutil ls
+
+  # - name: 'Use gcloud CLI'
+  #   run: 'gsutil ls'
+
