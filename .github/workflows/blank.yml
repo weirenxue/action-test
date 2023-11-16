@@ -21,9 +21,7 @@ jobs:
       - name: Cache file
         uses: actions/cache@v3
         with:
-          path: |
-            hello/hello_world.txt
-            hello/hello.txt
+          path: hello/*.txt
           key: ${{ github.run_id }}-hello_world
           
   cat:
@@ -33,6 +31,7 @@ jobs:
       - name: Cache file
         uses: actions/cache@v3
         with:
+          path: hello/*.txt
           key: ${{ github.run_id }}-hello_world
       - name: cat
         run: |
