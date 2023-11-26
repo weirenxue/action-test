@@ -16,7 +16,7 @@ jobs:
           echo "GITHUB_SERVER_URL=${GITHUB_SERVER_URL}"
           echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"
           echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
-          echo ${{github}}
+          echo ${{toJSON(github)}}
   #     - name: Get the GitHub actor
   #       run: echo "The GitHub actor is ${GITHUB_ACTOR}"
   #     - name: pwd before checkout
