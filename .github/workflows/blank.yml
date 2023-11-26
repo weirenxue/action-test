@@ -8,39 +8,44 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - name: Get the GitHub actor
-        run: echo "The GitHub actor is ${GITHUB_ACTOR}"
-      - name: pwd before checkout
-        run: pwd
-      - uses: actions/checkout@v4
-      - name: pwd after checkout
-        run: pwd
-      - name: echo to file
-        run: |
-          mkdir hello
-          echo "hello world" > hello/hello_world.txt
-          echo "hello!" > hello/hello.txt
-      - name: Cache file
-        uses: actions/cache@v3
-        with:
-          path: hello/*.txt
-          key: ${{ github.run_id }}-hello_world
+      - name: Get env
+        run : |
+          echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"
+          echo "GITHUB_SHA=${GITHUB_SHA}"
+          echo "GITHUB_EVENT_HEAD_COMMIT_MESSAGE=${GITHUB_EVENT_HEAD_COMMIT_MESSAGE}"
+  #     - name: Get the GitHub actor
+  #       run: echo "The GitHub actor is ${GITHUB_ACTOR}"
+  #     - name: pwd before checkout
+  #       run: pwd
+  #     - uses: actions/checkout@v4
+  #     - name: pwd after checkout
+  #       run: pwd
+  #     - name: echo to file
+  #       run: |
+  #         mkdir hello
+  #         echo "hello world" > hello/hello_world.txt
+  #         echo "hello!" > hello/hello.txt
+  #     - name: Cache file
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: hello/*.txt
+  #         key: ${{ github.run_id }}-hello_world
           
-  cat:
-    runs-on: ubuntu-latest
-    needs: echo
-    steps:
-      - name: Cache file
-        uses: actions/cache@v3
-        with:
-          path: hello/*.txt
-          key: ${{ github.run_id }}-hello_world
-      - name: cat
-        run: |
-          ls 
-          ls hello
-          cat hello/hello_world.txt
-          cat hello/hello.txt
+  # cat:
+  #   runs-on: ubuntu-latest
+  #   needs: echo
+  #   steps:
+  #     - name: Cache file
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: hello/*.txt
+  #         key: ${{ github.run_id }}-hello_world
+  #     - name: cat
+  #       run: |
+  #         ls 
+  #         ls hello
+  #         cat hello/hello_world.txt
+  #         cat hello/hello.txt
       
   # build:
   #   runs-on: ubuntu-latest
