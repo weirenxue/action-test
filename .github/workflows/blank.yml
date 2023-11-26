@@ -13,7 +13,7 @@ jobs:
           echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"
           echo "GITHUB_SHA=${GITHUB_SHA}"
           echo "GITHUB_EVENT_HEAD_COMMIT_MESSAGE=${GITHUB_EVENT_HEAD_COMMIT_MESSAGE}"
-          echo "${ GITHUB_SERVER_URL }/${GITHUB_REPOSITORY}/actions/runs/${ GITHUB_RUN_ID }"
+          echo ${ GITHUB_SERVER_URL }'/'${GITHUB_REPOSITORY}'/actions/runs/'${ GITHUB_RUN_ID }
           echo ${{github}}
   #     - name: Get the GitHub actor
   #       run: echo "The GitHub actor is ${GITHUB_ACTOR}"
