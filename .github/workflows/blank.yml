@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get the GitHub actor
-        run: echo "The GitHub actor is ${{ github.actor }}"
+        run: echo "The GitHub actor is ${ github.actor }"
       - name: pwd before checkout
         run: pwd
       - uses: actions/checkout@v4
