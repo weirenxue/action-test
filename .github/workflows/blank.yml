@@ -17,6 +17,7 @@ jobs:
           echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"
           echo "GITHUB_RUN_ID=${GITHUB_RUN_ID}"
           echo "GITHUB_JOB=${GITHUB_JOB}"
+          echo "GITHUB_WORKFLOW=${GITHUB_WORKFLOW}"
           echo "${{toJSON(github)}}"
           echo "github.event.commits[0].message=${{github.event.commits[0].message}}"
           echo "GITHUB_EVENT_COMMIT0_MESSAGE=${GITHUB_EVENT_COMMIT0_MESSAGE}"
